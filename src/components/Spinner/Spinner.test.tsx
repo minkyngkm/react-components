@@ -31,11 +31,32 @@ describe("<Spinner />", () => {
     const component = shallow(<Spinner text={text} />);
 
     expect(component.find("span").first().text()).toContain(text);
+    expect(component.find("i").first().text()).toContain(text);
+  });
+
+  it("renders Loading... for icon text if no text prop is provided", () => {
+    const component = shallow(<Spinner />);
+
+    expect(component.find("i").first().text()).toContain("Loading");
+  });
+
+  it("renders an assertive spinner", () => {
+    const component = shallow(<Spinner ariaLive={"assertive"} />);
+
+    expect(component.find({ ariaLive: "assertive" }));
   });
 
   it("renders a light spinner if given isLight prop", () => {
     const component = shallow(<Spinner isLight />);
 
     expect(component.find("i").first().hasClass("is-light")).toEqual(true);
+  });
+
+  it("renders a custom aria-label", () => {
+    const component = shallow(<Spinner aria-label="custom loading text" />);
+
+    expect(component.find("span").first().props()["aria-label"]).toEqual(
+      "custom loading text"
+    );
   });
 });

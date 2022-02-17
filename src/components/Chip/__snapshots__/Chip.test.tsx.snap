@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chip  renders default chip 1`] = `
+<button
+  className="p-chip"
+  onKeyDown={[Function]}
+>
+  <span
+    className="p-chip__value"
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "positive",
+      }
+    }
+  />
+</button>
+`;
+
+exports[`Chip  renders lead-value chip 1`] = `
+<button
+  className="p-chip"
+  onKeyDown={[Function]}
+>
+  <span
+    className="p-chip__lead"
+  >
+    OWNER
+  </span>
+  <span
+    className="p-chip__value"
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "Bob",
+      }
+    }
+  />
+</button>
+`;

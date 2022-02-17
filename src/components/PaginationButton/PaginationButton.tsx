@@ -1,13 +1,21 @@
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import React from "react";
 import type { MouseEventHandler } from "react";
 
-type PaginationDirection = "forward" | "back";
-type Props = {
+export type PaginationDirection = "forward" | "back";
+export type Props = {
+  /**
+   * The direction of the pagination.
+   */
   direction: PaginationDirection;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  /**
+   * Whether the pagination button should be disabled.
+   */
   disabled?: boolean;
+  /**
+   * Function to handle clicking the pagination button.
+   */
+  onClick: MouseEventHandler<HTMLButtonElement>;
 };
 
 const PaginationButton = ({
@@ -26,16 +34,10 @@ const PaginationButton = ({
         disabled={disabled}
         onClick={onClick}
       >
-        <i className="p-icon--contextual-menu">{label}</i>
+        <i className="p-icon--chevron-down">{label}</i>
       </button>
     </li>
   );
-};
-
-PaginationButton.propTypes = {
-  direction: PropTypes.oneOf(["forward", "back"]).isRequired,
-  onClick: PropTypes.func.isRequired,
-  disabled: PropTypes.bool,
 };
 
 export default PaginationButton;

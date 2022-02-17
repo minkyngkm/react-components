@@ -1,15 +1,32 @@
-import React, { SyntheticEvent } from "react";
-import PropTypes from "prop-types";
+import React from "react";
+import type { MouseEventHandler } from "react";
 import classNames from "classnames";
 
 import ActionButton from "../ActionButton";
 
-type Props = {
-  className?: string;
-  label: string;
-  onClick: (event: SyntheticEvent) => void;
-  summary?: string;
+import type { ClassName } from "types";
+
+export type Props = {
+  /**
+   * Optional class(es) to pass to the wrapping element.
+   */
+  className?: ClassName;
+  /**
+   * Whether the summary button is loading.
+   */
   isLoading?: boolean;
+  /**
+   * The label of the summary button.
+   */
+  label: string;
+  /**
+   * Function to handle clicking the summary button.
+   */
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  /**
+   * The summary content.
+   */
+  summary?: string;
 };
 
 const SummaryButton = ({
@@ -23,7 +40,6 @@ const SummaryButton = ({
     {summary && <span className="u-text--muted">{summary}</span>}
     {onClick && (
       <ActionButton
-        appearance="neutral"
         className={classNames("is-small", "is-dense", {
           "is-inline": summary,
         })}
@@ -36,13 +52,5 @@ const SummaryButton = ({
     )}
   </small>
 );
-
-SummaryButton.propTypes = {
-  className: PropTypes.string,
-  summary: PropTypes.string,
-  label: PropTypes.string,
-  onClick: PropTypes.func,
-  isLoading: PropTypes.bool,
-};
 
 export default SummaryButton;

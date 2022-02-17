@@ -1,13 +1,21 @@
-import PropTypes from "prop-types";
 import React from "react";
-import type { HTMLProps } from "react";
+import type { ChangeEventHandler, HTMLProps } from "react";
 
-type DropdownOptionProps = {
+export type DropdownOptionProps = {
+  /**
+   * The label of the dropdown option.
+   */
   label: string;
 } & HTMLProps<HTMLOptionElement>;
 
-export type CodeSnippetDropdownProps = {
-  onChange: (evt: React.SyntheticEvent) => void;
+export type Props = {
+  /**
+   * Function for handling the select value changing.
+   */
+  onChange: ChangeEventHandler<HTMLSelectElement>;
+  /**
+   * Options to pass to the select.
+   */
   options: DropdownOptionProps[];
 } & HTMLProps<HTMLSelectElement>;
 
@@ -15,7 +23,7 @@ export default function CodeSnippetDropdown({
   options,
   onChange,
   ...props
-}: CodeSnippetDropdownProps): JSX.Element {
+}: Props): JSX.Element {
   return (
     <select className="p-code-snippet__dropdown" onChange={onChange} {...props}>
       {options.map(({ label, value, ...props }) => (
@@ -26,13 +34,3 @@ export default function CodeSnippetDropdown({
     </select>
   );
 }
-
-CodeSnippetDropdown.props = {
-  onChange: PropTypes.func.isRequired,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    })
-  ).isRequired,
-};

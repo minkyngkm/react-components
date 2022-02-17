@@ -1,31 +1,76 @@
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import React from "react";
-import type { HTMLProps, ElementType, ReactNode, ComponentType } from "react";
+import type {
+  ButtonHTMLAttributes,
+  ComponentType,
+  ElementType,
+  MouseEventHandler,
+  ReactNode,
+} from "react";
+
+import type { ClassName, ValueOf } from "types";
+
+export const ButtonAppearance = {
+  BASE: "base",
+  BRAND: "brand",
+  LINK: "link",
+  NEGATIVE: "negative",
+  POSITIVE: "positive",
+} as const;
 
 /**
  * The type of the Button props.
  * @template P - The type of the props if providing a component to `element`
  */
 export type Props<P = null> = {
-  appearance?: string;
+  /**
+   * The appearance of the button.
+   */
+  appearance?: ValueOf<typeof ButtonAppearance> | string;
+  /**
+   * The content of the button.
+   */
   children?: ReactNode;
-  className?: string;
+  /**
+   * Optional class(es) to pass to the button element.
+   */
+  className?: ClassName;
+  /**
+   * Whether the button should have dense padding.
+   */
   dense?: boolean;
+  /**
+   * Whether the button should be disabled.
+   */
   disabled?: boolean;
+  /**
+   * Optional element or component to use instead of `button`.
+   */
   element?: ElementType | ComponentType<P>;
+  /**
+   * Whether the button has an icon in the content.
+   */
   hasIcon?: boolean;
+  /**
+   * Whether the button should display inline.
+   */
   inline?: boolean;
-  onClick?: (evt: React.MouseEvent) => void;
+  /**
+   * Function for handling button click event.
+   */
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  /**
+   * Whether the button should be small.
+   */
   small?: boolean;
-} & (HTMLProps<HTMLElement> | P);
+} & (Omit<ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> | P);
 
 /**
  * A component for the Vanilla button.
  * @template P - The type of the props if providing a component to `element`
  */
 const Button = <P,>({
-  appearance = "neutral",
+  appearance,
   children,
   className,
   dense,
@@ -38,7 +83,7 @@ const Button = <P,>({
   ...buttonProps
 }: Props<P>): JSX.Element => {
   const classes = classNames(
-    `p-button--${appearance}`,
+    appearance ? `p-button--${appearance}` : "p-button",
     {
       "has-icon": hasIcon,
       "is-dense": dense,
@@ -62,19 +107,6 @@ const Button = <P,>({
       {children}
     </Component>
   );
-};
-
-Button.propTypes = {
-  appearance: PropTypes.string,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  dense: PropTypes.bool,
-  disabled: PropTypes.bool,
-  element: PropTypes.elementType,
-  hasIcon: PropTypes.bool,
-  inline: PropTypes.bool,
-  onClick: PropTypes.func,
-  small: PropTypes.bool,
 };
 
 export default Button;

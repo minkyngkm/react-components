@@ -1,12 +1,19 @@
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import React from "react";
 
 import CodeSnippetBlock from "./CodeSnippetBlock";
-import type { CodeSnippetBlockProps } from "./CodeSnippetBlock";
+import type { Props as CodeSnippetBlockProps } from "./CodeSnippetBlock";
+
+import type { ClassName } from "types";
 
 export type Props = {
-  className?: string;
+  /**
+   * Optional class(es) to pass to the wrapping div element.
+   */
+  className?: ClassName;
+  /**
+   * A list of code blocks to display.
+   */
   blocks: CodeSnippetBlockProps[];
 };
 
@@ -28,8 +35,3 @@ export default function CodeSnippet({ className, blocks }: Props): JSX.Element {
     </div>
   );
 }
-
-CodeSnippet.propTypes = {
-  blocks: PropTypes.array.isRequired,
-  className: PropTypes.string,
-};

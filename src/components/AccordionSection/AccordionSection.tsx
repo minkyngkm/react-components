@@ -1,21 +1,39 @@
-import { nanoid } from "nanoid";
-import PropTypes from "prop-types";
-import React, { useRef } from "react";
+import React from "react";
 import type { ReactNode } from "react";
 
 import type { Headings } from "types";
+import { useId } from "hooks/useId";
 
 export type AccordionHeadings = Exclude<Headings, "h1">;
 
 export type Props = {
+  /**
+   * The content of the section.
+   */
   content?: ReactNode;
+  /**
+   * An optional value to set the expanded section. The value must match a
+   * section key.
+   */
   expanded?: string;
+  headingLevel?: number;
+  /**
+   * An optional click event when the title is clicked.
+   */
   onTitleClick?: (expanded: boolean, key: string) => void;
+  /**
+   * An optional key to be used to track which section is selected.
+   */
   sectionKey?: string;
   setExpanded?: (key: string | null, title: string | null) => void;
+  /**
+   * The title of the section.
+   */
   title?: string;
+  /**
+   * Optional string describing heading element that should be used for the section titles.
+   */
   titleElement?: AccordionHeadings;
-  headingLevel?: number;
 };
 
 const AccordionSection = ({
@@ -28,8 +46,8 @@ const AccordionSection = ({
   titleElement,
   headingLevel = 3,
 }: Props): JSX.Element => {
-  const sectionId = useRef(nanoid());
-  const key = sectionKey || sectionId.current;
+  const sectionId = useId();
+  const key = sectionKey || sectionId;
   const isExpanded = expanded === key;
   const Title = titleElement || "div";
 
@@ -41,7 +59,7 @@ const AccordionSection = ({
         className="p-accordion__heading"
       >
         <button
-          aria-controls={`#${sectionId.current}`}
+          aria-controls={`#${sectionId}`}
           aria-expanded={isExpanded ? "true" : "false"}
           className="p-accordion__tab"
           onClick={() => {
@@ -60,32 +78,15 @@ const AccordionSection = ({
       </Title>
       <section
         aria-hidden={isExpanded ? "false" : "true"}
-        aria-labelledby={sectionId.current}
+        aria-labelledby={sectionId}
         className="p-accordion__panel"
-        id={sectionId.current}
+        id={sectionId}
         role="tabpanel"
       >
         {content}
       </section>
     </li>
   );
-};
-
-AccordionSection.propTypes = {
-  content: PropTypes.node,
-  expanded: PropTypes.string,
-  /**
-   * An optional click event when the title is clicked.
-   */
-  onTitleClick: PropTypes.func,
-  /**
-   * An optional key to be used to track which section is selected.
-   */
-  sectionKey: PropTypes.string,
-  setExpanded: PropTypes.func,
-  title: PropTypes.string,
-  titleElement: PropTypes.oneOf(["h2", "h3", "h4", "h5", "h6"]),
-  headingLevel: PropTypes.oneOf([2, 3, 4, 5, 6]),
 };
 
 export default AccordionSection;

@@ -1,12 +1,11 @@
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
+import type { HTMLProps, ReactNode } from "react";
 
-import { useWindowFitment } from "../../../hooks";
+import { useWindowFitment } from "hooks";
 import Button from "../../Button";
-import type { Props as ButtonProps } from "../../Button";
-import type { WindowFitment } from "../../../hooks";
+import type { ButtonProps } from "../../Button";
+import type { WindowFitment } from "hooks";
 
 /**
  * The type of the menu links.
@@ -35,7 +34,7 @@ export type Props<L = null> = {
   positionNode?: HTMLElement;
   setAdjustedPosition?: (position: Position) => void;
   wrapperClass?: string;
-};
+} & HTMLProps<HTMLSpanElement>;
 
 /**
  * Calculate the styles for the menu.
@@ -138,7 +137,7 @@ const generateLink = <L,>(
       key={key}
       onClick={
         onClick
-          ? (evt: React.MouseEvent) => {
+          ? (evt) => {
               closePortal(evt.nativeEvent);
               onClick(evt);
             }
@@ -166,6 +165,7 @@ const ContextualMenuDropdown = <L,>({
   positionNode,
   setAdjustedPosition,
   wrapperClass,
+  ...props
 }: Props<L>): JSX.Element => {
   const dropdown = useRef();
   const [positionStyle, setPositionStyle] = useState(
@@ -202,7 +202,11 @@ const ContextualMenuDropdown = <L,>({
   }, [adjustedPosition, updatePositionStyle]);
 
   return (
-    <span className={wrapperClass} style={positionStyle as React.CSSProperties}>
+    <span
+      className={wrapperClass}
+      style={positionStyle as React.CSSProperties}
+      {...props}
+    >
       <span
         className={classNames("p-contextual-menu__dropdown", dropdownClassName)}
         id={id}
@@ -238,33 +242,6 @@ const ContextualMenuDropdown = <L,>({
       </span>
     </span>
   );
-};
-
-ContextualMenuDropdown.propTypes = {
-  adjustedPosition: PropTypes.string,
-  autoAdjust: PropTypes.bool,
-  closePortal: PropTypes.func,
-  constrainPanelWidth: PropTypes.bool,
-  dropdownClassName: PropTypes.string,
-  dropdownContent: PropTypes.node,
-  id: PropTypes.string,
-  isOpen: PropTypes.bool,
-  links: PropTypes.arrayOf(
-    PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape(Button.propTypes),
-      PropTypes.arrayOf(PropTypes.shape(Button.propTypes)),
-    ])
-  ),
-  position: PropTypes.oneOf(["left", "center", "right"]),
-  positionCoords: PropTypes.shape({
-    height: PropTypes.number.isRequired,
-    left: PropTypes.number.isRequired,
-    top: PropTypes.number.isRequired,
-    width: PropTypes.number,
-  }),
-  positionNode: PropTypes.object,
-  wrapperClass: PropTypes.string,
 };
 
 export default ContextualMenuDropdown;

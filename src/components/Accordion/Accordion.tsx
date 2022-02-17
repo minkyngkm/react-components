@@ -1,14 +1,54 @@
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import React, { useState, HTMLProps } from "react";
 
-import AccordionSection from "../AccordionSection";
+import AccordionSection from "components/AccordionSection";
 import type {
   AccordionHeadings,
   AccordionSectionProps,
-} from "../AccordionSection";
+} from "components/AccordionSection";
 
-type Section = AccordionSectionProps & { key?: string | number };
+import type { ClassName, PropsWithSpread } from "types";
+
+export type Section = AccordionSectionProps & {
+  /**
+   * An optional key for the section component. It will also be
+   * used to track which section is selected.
+   */
+  key?: string | number;
+};
+
+export type Props = PropsWithSpread<
+  {
+    /**
+     * Optional classes applied to the parent element.
+     */
+    className?: ClassName;
+    /**
+     * An optional value to set the expanded section. The value must match a
+     * section key. This value will only set the expanded section on first render
+     * if externallyControlled is not set to `true`.
+     */
+    expanded?: string;
+    /**
+     * Whether the expanded section will be controlled via external state.
+     */
+    externallyControlled?: boolean;
+    /**
+     * Optional function that is called when the expanded section is changed.
+     * The function is provided the section title or null.
+     */
+    onExpandedChange?: (id, title: string) => void;
+    /**
+     * An array of sections and content.
+     */
+    sections: Section[];
+    /**
+     * Optional string describing heading element that should be used for the section titles.
+     */
+    titleElement?: AccordionHeadings;
+  },
+  HTMLProps<HTMLElement>
+>;
 
 const generateSections = (
   sections: Section[],
@@ -26,15 +66,6 @@ const generateSections = (
       {...props}
     />
   ));
-
-type Props = {
-  sections: Section[];
-  className?: string;
-  expanded?: string;
-  externallyControlled?: boolean;
-  onExpandedChange?: (id, title: string) => void;
-  titleElement?: AccordionHeadings;
-} & HTMLProps<HTMLElement>;
 
 const Accordion = ({
   className,
@@ -67,56 +98,6 @@ const Accordion = ({
       </ul>
     </aside>
   );
-};
-
-Accordion.propTypes = {
-  /**
-   * Optional classes applied to the parent element.
-   */
-  className: PropTypes.string,
-  /**
-   * An optional value to set the expanded section. The value must match a
-   * section key. This value will only set the expanded section on first render
-   * if externallyControlled is not set to `true`.
-   */
-  expanded: PropTypes.string,
-  /**
-   * Whether the expanded section will be controlled via external state.
-   */
-  externallyControlled: PropTypes.bool,
-  /**
-   * An array of sections and content.
-   */
-  sections: PropTypes.arrayOf(
-    PropTypes.shape({
-      /**
-       * The content of the section.
-       */
-      content: PropTypes.node,
-      /**
-       * An optional key for the section component. It will also be
-       * used to track which section is selected.
-       */
-      key: PropTypes.string,
-      /**
-       * An optional click event when the title is clicked.
-       */
-      onTitleClick: PropTypes.func,
-      /**
-       * The title of the section.
-       */
-      title: PropTypes.string,
-    }).isRequired
-  ),
-  /**
-   * Optional function that is called when the expanded section is changed.
-   * The function is provided the section title or null.
-   */
-  onExpandedChange: PropTypes.func,
-  /**
-   * Optional string describing heading element that should be used for the section titles.
-   */
-  titleElement: PropTypes.oneOf(["h2", "h3", "h4", "h5", "h6"]),
 };
 
 export default Accordion;

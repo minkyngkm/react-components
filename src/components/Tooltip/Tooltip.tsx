@@ -1,11 +1,12 @@
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import usePortal from "react-useportal";
 
-import { useWindowFitment, useListener } from "../../hooks";
-import type { WindowFitment } from "../../hooks";
+import { useWindowFitment, useListener } from "hooks";
+import type { WindowFitment } from "hooks";
+
+import type { ClassName } from "types";
 
 export type CSSPosition =
   | "static"
@@ -17,9 +18,9 @@ export type CSSPosition =
   | "inherit";
 
 export type PositionStyle = {
+  left: number;
   pointerEvents?: string;
   position: CSSPosition;
-  left: number;
   top: number;
 };
 
@@ -34,13 +35,37 @@ export type Position =
   | "top-right";
 
 export type Props = {
+  /**
+   * Whether the tooltip should adjust to fit in the screen.
+   */
   autoAdjust?: boolean;
-  className?: string;
+  /**
+   * Element on which to apply the tooltip.
+   */
   children: ReactNode;
+  /**
+   * An optional class to apply to the wrapping element.
+   */
+  className?: ClassName;
+  /**
+   * Whether the tooltip should follow the mouse.
+   */
   followMouse?: boolean;
-  message?: string | null;
+  /**
+   * Message to display when the element is hovered.
+   */
+  message?: ReactNode;
+  /**
+   * Position of the tooltip relative to the element.
+   */
   position?: Position;
+  /**
+   * An optional class to apply to the element that wraps the children.
+   */
   positionElementClassName?: string;
+  /**
+   * An optional class to apply to the tooltip message element.
+   */
   tooltipClassName?: string;
 };
 
@@ -239,7 +264,7 @@ const Tooltip = ({
                   "is-detached",
                   tooltipClassName
                 )}
-                data-test="tooltip-portal"
+                data-testid="tooltip-portal"
                 style={positionStyle as React.CSSProperties}
               >
                 <span className="p-tooltip__message" ref={messageRef}>
@@ -254,50 +279,6 @@ const Tooltip = ({
       )}
     </>
   );
-};
-
-Tooltip.propTypes = {
-  /**
-   * Whether the tooltip should adjust to fit in the screen.
-   */
-  autoAdjust: PropTypes.bool,
-  /**
-   * Element on which to apply the tooltip.
-   */
-  children: PropTypes.node.isRequired,
-  /**
-   * An optional class to apply to the wrapping element.
-   */
-  className: PropTypes.node,
-  /**
-   * Whether the tooltip should follow the mouse.
-   */
-  followMouse: PropTypes.bool,
-  /**
-   * Message to display when the element is hovered.
-   */
-  message: PropTypes.node,
-  /**
-   * Position of the tooltip relative to the element.
-   */
-  position: PropTypes.oneOf([
-    "btm-center",
-    "btm-left",
-    "btm-right",
-    "left",
-    "right",
-    "top-center",
-    "top-left",
-    "top-right",
-  ]),
-  /**
-   * An optional class to apply to the element that wraps the children.
-   */
-  positionElementClassName: PropTypes.node,
-  /**
-   * An optional class to apply to the tooltip message element.
-   */
-  tooltipClassName: PropTypes.node,
 };
 
 export default Tooltip;

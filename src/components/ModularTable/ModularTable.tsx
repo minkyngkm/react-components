@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import PropTypes from "prop-types";
 import { useTable } from "react-table";
 import type { Column } from "react-table";
 
@@ -10,9 +9,21 @@ import TableCell from "../TableCell";
 import Icon from "../Icon";
 
 export type Props<D extends Record<string, unknown>> = {
+  /**
+   * The columns of the table.
+   */
   columns: Column<D>[];
+  /**
+   * The data of the table.
+   */
   data: D[];
+  /**
+   * A message to display if data is empty.
+   */
   emptyMsg?: string;
+  /**
+   * Optional extra row to display underneath the main table content.
+   */
   footer?: ReactNode;
 };
 
@@ -98,20 +109,5 @@ function ModularTable({
     </Table>
   );
 }
-
-ModularTable.propTypes = {
-  columns: PropTypes.arrayOf(
-    PropTypes.shape({
-      Header: PropTypes.node,
-      accessor: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-      Cell: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
-      className: PropTypes.string,
-      getCellIcon: PropTypes.func,
-    }).isRequired
-  ),
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
-  emptyMsg: PropTypes.string,
-  footer: PropTypes.node,
-};
 
 export default ModularTable;

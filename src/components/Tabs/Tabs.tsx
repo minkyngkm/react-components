@@ -1,19 +1,44 @@
 import classNames from "classnames";
-import PropTypes from "prop-types";
 import React from "react";
 import type { HTMLProps, ElementType, ReactNode, ComponentType } from "react";
 
+import type { ClassName } from "types";
+
 export type TabLink<P = null> = {
+  /**
+   * Whether the tab link should have active styling.
+   */
   active?: boolean;
-  className?: string;
+  /**
+   * Optional classes applied to the link element.
+   */
+  className?: ClassName;
+  /**
+   * Optional component to be used instead of the default "a" element.
+   */
   component?: ElementType | ComponentType<P>;
+  /**
+   * Label to be displayed inside the tab link.
+   */
   label: ReactNode;
+  /**
+   * Optional classes applied to the "li" element.
+   */
   listItemClassName?: string;
 } & (HTMLProps<HTMLElement> | P);
 
-type Props<P = null> = {
+export type Props<P = null> = {
+  /**
+   * Optional classes applied to the parent "nav" element.
+   */
+  className?: ClassName;
+  /**
+   * An array of tab link objects.
+   */
   links: TabLink<P>[];
-  className?: string;
+  /**
+   * Optional classes applied to the "ul" element.
+   */
   listClassName?: string;
 };
 
@@ -43,7 +68,7 @@ const Tabs = <P,>({
               <Component
                 aria-selected={active}
                 className={classNames("p-tabs__link", className)}
-                data-test={`tab-link-${label}`}
+                data-testid={`tab-link-${label}`}
                 {...rest}
               >
                 {label}
@@ -54,44 +79,6 @@ const Tabs = <P,>({
       </ul>
     </nav>
   );
-};
-
-Tabs.propTypes = {
-  /**
-   * Optional classes applied to the parent "nav" element.
-   */
-  className: PropTypes.string,
-  /**
-   * An array of tab link objects.
-   */
-  links: PropTypes.arrayOf(
-    PropTypes.shape({
-      /**
-       * Whether the tab link should have active styling.
-       */
-      active: PropTypes.bool,
-      /**
-       * Optional classes applied to the link element.
-       */
-      className: PropTypes.string,
-      /**
-       * Optional component to be used instead of the default "a" element.
-       */
-      component: PropTypes.elementType,
-      /**
-       * Label to be displayed inside the tab link.
-       */
-      label: PropTypes.node.isRequired,
-      /**
-       * Optional classes applied to the "li" element.
-       */
-      listItemClassName: PropTypes.string,
-    }).isRequired
-  ),
-  /**
-   * Optional classes applied to the "ul" element.
-   */
-  listClassName: PropTypes.string,
 };
 
 export default Tabs;

@@ -1,9 +1,10 @@
-import PropTypes from "prop-types";
 import React from "react";
 import type { HTMLProps } from "react";
 
 import PaginationButton from "../PaginationButton";
 import PaginationItem from "../PaginationItem";
+
+import type { PropsWithSpread } from "types";
 
 const scrollTop = () => window.scrollTo(0, 0);
 
@@ -91,14 +92,35 @@ const PaginationItemSeparator = (): JSX.Element => (
   </li>
 );
 
-type Props = {
-  currentPage: number;
-  itemsPerPage: number;
-  paginate: (page: number) => void;
-  totalItems: number;
-  scrollToTop?: boolean;
-  truncateThreshold?: number;
-} & HTMLProps<HTMLElement>;
+export type Props = PropsWithSpread<
+  {
+    /**
+     * The current page being viewed.
+     */
+    currentPage: number;
+    /**
+     * The number of items to show per page.
+     */
+    itemsPerPage: number;
+    /**
+     * Function to handle paginating the items.
+     */
+    paginate: (page: number) => void;
+    /**
+     * The total number of items.
+     */
+    totalItems: number;
+    /**
+     * Whether to scroll to the top of the list on page change.
+     */
+    scrollToTop?: boolean;
+    /**
+     * The number of pages at which to truncate the pagination items.
+     */
+    truncateThreshold?: number;
+  },
+  HTMLProps<HTMLElement>
+>;
 
 const Pagination = ({
   itemsPerPage,
@@ -151,15 +173,6 @@ const Pagination = ({
       </ul>
     </nav>
   );
-};
-
-Pagination.propTypes = {
-  currentPage: PropTypes.number.isRequired,
-  itemsPerPage: PropTypes.number.isRequired,
-  paginate: PropTypes.func.isRequired,
-  totalItems: PropTypes.number.isRequired,
-  scrollToTop: PropTypes.bool,
-  truncateThreshold: PropTypes.number,
 };
 
 export default Pagination;

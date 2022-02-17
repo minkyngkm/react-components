@@ -46,9 +46,9 @@ columns = {
 
 ##### Icons
 
-To show an icon in the cells of a column `getCellIcon` function should be defined. The function takes a cell data as an argument and should return one of built in icons (from the `ICONS` enum), a string with a custom icon name, or `false` if no icon should be shown.
+To show an icon in the cells of a column `getCellIcon` function should be defined. The function takes a cell data as an argument and should return one of built in icons (from the `ICONS` const), a string with a custom icon name, or `false` if no icon should be shown.
 
-The `ICONS` enum contains all [the Vanilla built in icons](https://vanillaframework.io/docs/patterns/icons) such as "plus", "minus", "success", "error", etc.
+The `ICONS` const contains all [the Vanilla built in icons](https://vanillaframework.io/docs/patterns/icons) such as "plus", "minus", "success", "error", etc.
 
 Product specific icons can be used as well, assuming that the product provides the necessary CSS styling and the icon follows the Vanilla naming convention `p-icon--{name}`.
 
@@ -187,7 +187,7 @@ columns = {
 
 Example below shows a basic `ModularTable` with `SummaryButton` component in the footer.
 
-export const getDummyData = (i = 0) => [
+export const getSampleData = (i = 0) => [
   { data: ++i * 100 + i },
   { data: ++i * 100 + i },
   { data: ++i * 100 + i },
@@ -198,10 +198,10 @@ export const getDummyData = (i = 0) => [
 <Canvas>
   <Story name="Load more">
     {() => {
-      const [data, setData] = useState(getDummyData());
+      const [data, setData] = useState(getSampleData());
       const hasMore = data.length < 20;
       const loadMore = () => {
-        setData(data.concat(getDummyData(data.length)));
+        setData(data.concat(getSampleData(data.length)));
       };
       const columns = [
         {

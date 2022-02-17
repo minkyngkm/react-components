@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SearchBox  renders 1`] = `
+<div
+  className="p-search-box"
+>
+  <label
+    className="u-off-screen"
+    htmlFor="search"
+  >
+    Search
+  </label>
+  <input
+    autoComplete="on"
+    className="p-search-box__input"
+    id="search"
+    name="search"
+    onChange={[Function]}
+    placeholder="Search"
+    type="search"
+  />
+  <button
+    className="p-search-box__button"
+    onClick={[Function]}
+  >
+    <Icon
+      name="search"
+    >
+      Search
+    </Icon>
+  </button>
+</div>
+`;

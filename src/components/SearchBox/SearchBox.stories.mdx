@@ -10,7 +10,7 @@ export const Template = (args) => <SearchBox {...args} />;
 
 This is a [React](https://reactjs.org/) component for the Vanilla [SearchBox](https://docs.vanillaframework.io/patterns/search-box/).
 
-Search boxes enable search functionality on a page and are typically used in a navigation bar.
+Search boxes enable search functionality on a page and are typically used in a navigation bar. SearchBox elements should be wrapped within a form element that handles its own submit action.
 
 ### Props
 
@@ -50,7 +50,7 @@ state and the `value` from state.
       <div className="p-navigation__row--full-width">
         <div className="p-navigation__banner">
           <div className="p-navigation__logo">
-            <a className="p-navigation__link" href="#">
+            <a className="p-navigation__item" href="#">
               <img
                 className="p-navigation__image"
                 src="https://assets.ubuntu.com/v1/5d6da5c4-logo-canonical-aubergine.svg"
@@ -78,21 +78,31 @@ state and the `value` from state.
           <span className="u-off-screen">
             <a href="#main-content">Jump to main content</a>
           </span>
-          <ul className="p-navigation__links" role="menu">
-            <li className="p-navigation__link" role="menuitem">
-              <a href="#">Products</a>
+          <ul className="p-navigation__items" role="menu">
+            <li className="p-navigation__item" role="menuitem">
+              <a href="#" class="p-navigation__link">
+                Products
+              </a>
             </li>
-            <li className="p-navigation__link" role="menuitem">
-              <a href="#">Services</a>
+            <li className="p-navigation__item" role="menuitem">
+              <a href="#" class="p-navigation__link">
+                Services
+              </a>
             </li>
-            <li className="p-navigation__link" role="menuitem">
-              <a href="#">Partners</a>
+            <li className="p-navigation__item" role="menuitem">
+              <a href="#" class="p-navigation__link">
+                Partners
+              </a>
             </li>
-            <li className="p-navigation__link" role="menuitem">
-              <a href="#">About</a>
+            <li className="p-navigation__item" role="menuitem">
+              <a href="#" class="p-navigation__link">
+                About
+              </a>
             </li>
-            <li className="p-navigation__link" role="menuitem">
-              <a href="#">Partners</a>
+            <li className="p-navigation__item" role="menuitem">
+              <a href="#" class="p-navigation__link">
+                Partners
+              </a>
             </li>
           </ul>
           <SearchBox />

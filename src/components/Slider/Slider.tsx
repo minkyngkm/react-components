@@ -1,25 +1,66 @@
-import PropTypes from "prop-types";
 import React from "react";
 import type { ChangeEventHandler, HTMLProps, ReactNode } from "react";
 
 import Field from "../Field";
 
-export const FILLED_COLOR = "#0066CC";
+import type { PropsWithSpread } from "types";
 
-type Props = {
-  caution?: ReactNode;
-  disabled?: boolean;
-  error?: ReactNode;
-  id?: string;
-  help?: ReactNode;
-  inputDisabled?: boolean;
-  label?: ReactNode;
-  max: number;
-  min: number;
-  onChange: ChangeEventHandler;
-  required?: boolean;
-  showInput?: boolean;
-} & HTMLProps<HTMLInputElement>;
+export const FILLED_COLOR = "#0066CC";
+export const EMPTY_COLOR = "#D9D9D9";
+
+export type Props = PropsWithSpread<
+  {
+    /**
+     * Field caution message.
+     */
+    caution?: ReactNode;
+    /**
+     * Whether to disable the slider and input (if showInput is true).
+     */
+    disabled?: boolean;
+    /**
+     * Field error message.
+     */
+    error?: ReactNode;
+    /**
+     * Field help message.
+     */
+    help?: ReactNode;
+    /**
+     * Field id. Only passed to range input, not to number input.
+     */
+    id?: string;
+    /**
+     * Whether to disable only the input, but not the slider.
+     */
+    inputDisabled?: boolean;
+    /**
+     * Field label.
+     */
+    label?: ReactNode;
+    /**
+     * Maximum value of the slider.
+     */
+    max: number;
+    /**
+     * Minimum value of the slider.
+     */
+    min: number;
+    /**
+     * Change event handler.
+     */
+    onChange: ChangeEventHandler<HTMLInputElement>;
+    /**
+     * Whether the field is required for the form to submit.
+     */
+    required?: boolean;
+    /**
+     * Whether to show a number input with the numerical value next to the slider.
+     */
+    showInput?: boolean;
+  },
+  HTMLProps<HTMLInputElement>
+>;
 
 export const Slider = ({
   caution,
@@ -47,8 +88,8 @@ export const Slider = ({
         to right,
         ${FILLED_COLOR} 0%,
         ${FILLED_COLOR} ${filledPercentage},
-        transparent ${filledPercentage},
-        transparent 100%
+        ${EMPTY_COLOR} ${filledPercentage},
+        ${EMPTY_COLOR} 100%
       )`,
     };
   }
@@ -86,57 +127,6 @@ export const Slider = ({
       </div>
     </Field>
   );
-};
-
-Slider.propTypes = {
-  /**
-   * Field caution message.
-   */
-  caution: PropTypes.node,
-  /**
-   * Whether to disable the slider and input (if showInput is true).
-   */
-  disabled: PropTypes.bool,
-  /**
-   * Field error message.
-   */
-  error: PropTypes.node,
-  /**
-   * Field help message.
-   */
-  help: PropTypes.node,
-  /**
-   * Field id. Only passed to range input, not to number input.
-   */
-  id: PropTypes.string,
-  /**
-   * Whether to disable only the input, but not the slider.
-   */
-  inputDisabled: PropTypes.bool,
-  /**
-   * Field label.
-   */
-  label: PropTypes.node,
-  /**
-   * Maximum value of the slider.
-   */
-  max: PropTypes.number.isRequired,
-  /**
-   * Minimum value of the slider.
-   */
-  min: PropTypes.number.isRequired,
-  /**
-   * Change event handler.
-   */
-  onChange: PropTypes.func.isRequired,
-  /**
-   * Whether the field is required for the form to submit.
-   */
-  required: PropTypes.bool,
-  /**
-   * Whether to show a number input with the numerical value next to the slider.
-   */
-  showInput: PropTypes.bool,
 };
 
 export default Slider;

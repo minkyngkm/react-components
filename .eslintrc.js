@@ -1,5 +1,5 @@
 module.exports = {
-  parser: "babel-eslint",
+  parser: "@babel/eslint-parser",
   plugins: ["react", "prettier", "cypress"],
   extends: [
     "react-app", // Use the recommended rules from CRA.
@@ -15,6 +15,28 @@ module.exports = {
   },
   rules: {
     "prettier/prettier": "error",
+    "react/forbid-component-props": [
+      "error",
+      {
+        forbid: [
+          {
+            propName: "data-test",
+            message: "Use `data-testid` instead of `data-test` attribute",
+          },
+        ],
+      },
+    ],
+    "react/forbid-dom-props": [
+      "error",
+      {
+        forbid: [
+          {
+            propName: "data-test",
+            message: "Use `data-testid` instead of `data-test` attribute",
+          },
+        ],
+      },
+    ],
   },
   settings: {
     react: {
